@@ -4,7 +4,7 @@ dotenv.config({ path: `${__dirname}/../.env` });
 import build from "./application";
 import db from "./config/database";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const fastify = build();
 

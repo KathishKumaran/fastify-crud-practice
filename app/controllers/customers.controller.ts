@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest, FastifyError } from "fastify";
 import { CustomerAttributes } from "../types/customer";
-import { create, filterAndPaginate } from "../services/customer.service";
+import {
+  create,
+  filterAndPaginate,
+  savePdf,
+} from "../services/customer.service";
 import { CustomerListQueryParams } from "../types/customers.controllers";
 
 function createCustomer(req: FastifyRequest, reply: FastifyReply) {
@@ -24,5 +28,16 @@ function list(req: FastifyRequest, reply: FastifyReply) {
       reply.send(error);
     });
 }
+async function pdf(req: FastifyRequest, reply: FastifyReply) {
+  const { base64 } = req.body as { base64: string };
 
-export { createCustomer, list };
+  savePdf(base64)
+    .then((base64) => {
+      reply.code(200).send(base64);
+    })
+    .catch((error) => {
+      reply.code(403).send(error);
+    });
+}
+
+export { createCustomer, list, pdf };

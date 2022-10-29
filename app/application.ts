@@ -23,7 +23,12 @@ function build() {
 
   server.register(fastifyStatic, staticFileOptions);
   server.register(routes);
-
+  server.addContentTypeParser(
+    "multipart/form-data",
+    (request: any, done: any) => {
+      done(null, request);
+    }
+  );
   return server;
 }
 

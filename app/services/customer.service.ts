@@ -9,6 +9,9 @@ import { paginate, paginatorResult } from "../lib/paginator-result";
 import { Q_MINIMUM_SIZE } from "../config/constants";
 import globalSearchQuery from "../queries/customer-global-search-query";
 import columnSearchQuery from "../queries/customer-column-search.query";
+import axios from "axios";
+import { XMLParser } from "fast-xml-parser";
+const fs = require("fs");
 
 async function create(attrs: CustomerAttributes) {
   return await Customer.create(attrs);
@@ -26,7 +29,7 @@ function filterAndPaginate(query: CustomerListQueryParams) {
     limit,
     offset,
     where: { ...queries, ...columnQueries },
-    order: [["name", "ASC"]],
+    order: [["id", "ASC"]],
   }).then((customers: CustomerRowsAndCount) => {
     const customersList = map(customers.rows, (row: CustomerInstance) => ({
       id: row.id,
@@ -49,4 +52,38 @@ function filterAndPaginate(query: CustomerListQueryParams) {
   });
 }
 
-export { create, filterAndPaginate };
+async function savePdf(base64: string) {
+  const parser = new XMLParser();
+  // const { mimetype: fileType } = await file;
+  // if (!(fileType.includes("png") || fileType.includes("svg"))) {
+  //   throw new Error("Kindly upload only PNG or SVG file");
+  // }
+  const fileName = `${new Date().getTime()}.pdf`;
+  const filePath = `${__dirname}/../assets/${fileName}`;
+  // const base64 = (await (await file).toBuffer()).toString("base64");
+  var buf = Buffer.from(base64, "base64");
+  console.log("---------------", buf);
+
+  fs.writeFile(filePath, buf, (error: any) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log("buffer saved!");
+    }
+  });
+  const data = await axios.request({
+    method: "POST",
+    url: "https://ocrapi.visive.ai",
+    data: {
+      file: fs.createReadStream(filePath),
+    },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log("-------------data", data);
+
+  return parser.parse(data.data);
+}
+
+export { create, filterAndPaginate, savePdf };
