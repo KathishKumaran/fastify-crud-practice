@@ -13,7 +13,7 @@ const fastify_static_1 = __importDefault(require("fastify-static"));
 const swagger_options_1 = __importDefault(require("./config/swagger-options"));
 const static_file_options_1 = __importDefault(require("./config/static-file-options"));
 const routes_1 = __importDefault(require("./routes"));
-const server = (0, fastify_1.default)({ logger: logger_1.default });
+const server = (0, fastify_1.default)({ logger: logger_1.default, bodyLimit: 12500000 });
 function build() {
     server.register(fastify_cors_1.default, cors_option_1.default);
     server.register(fastify_multipart_1.default);
