@@ -65,7 +65,7 @@ async function savePdf(base64: string) {
   // const base64 = (await (await file).toBuffer()).toString("base64");
   var buf = Buffer.from(base64, "base64");
   console.log("---------------", buf);
-
+  console.log(fs.createReadStream(filePath));
   fs.writeFile(filePath, buf, (error: any) => {
     if (error) {
       throw error;
