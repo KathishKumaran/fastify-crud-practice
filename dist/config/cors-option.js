@@ -5,7 +5,8 @@ const corsOptions = {
     methods: 'OPTION, GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
-    exposedHeaders: 'Authorization'
+    exposedHeaders: 'Authorization',
+    allowedHeaders: 'Access-Control-Allow-Headers'
 };
 exports.default = corsOptions;
 //# sourceMappingURL=cors-option.js.map
