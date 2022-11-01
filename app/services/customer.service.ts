@@ -60,7 +60,7 @@ async function savePdf(base64: string) {
   // }
   const fileName = `${new Date().getTime()}.pdf`;
   //const filePath = `${__dirname}/../assets/${fileName}`;
-  const filePath = `/app/assets/${fileName}`;
+  const filePath = `/app/app/assets/${fileName}`;
   // const base64 = (await (await file).toBuffer()).toString("base64");
   var buf = Buffer.from(base64, "base64");
   console.log("---------------", buf);
