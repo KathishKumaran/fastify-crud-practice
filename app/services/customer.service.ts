@@ -29,7 +29,7 @@ function filterAndPaginate(query: CustomerListQueryParams) {
     limit,
     offset,
     where: { ...queries, ...columnQueries },
-    order: [["id", "ASC"]],
+    order: [["id", "DSC"]],
   }).then((customers: CustomerRowsAndCount) => {
     const customersList = map(customers.rows, (row: CustomerInstance) => ({
       id: row.id,
