@@ -36,7 +36,7 @@ async function pdf(req: FastifyRequest, reply: FastifyReply) {
       reply.code(200).send(base64);
     })
     .catch((error) => {
-      reply.code(403).send(error);
+      reply.code(500).send(error);
     });
 }
 

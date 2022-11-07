@@ -59,8 +59,8 @@ async function savePdf(base64: string) {
   //   throw new Error("Kindly upload only PNG or SVG file");
   // }
   const fileName = `${new Date().getTime()}.pdf`;
-  //const filePath = `${__dirname}/../assets/${fileName}`;
-  const filePath = `/app/app/assets/${fileName}`;
+  const filePath = `${__dirname}/../assets/${fileName}`;
+  //const filePath = `/app/app/assets/${fileName}`;
   console.log("-----------------", filePath);
   // const base64 = (await (await file).toBuffer()).toString("base64");
   var buf = Buffer.from(base64, "base64");
