@@ -73,7 +73,7 @@ async function savePdf(base64: string) {
       console.log("buffer saved!");
     }
   });
-  try {
+  // try {
     const data = await axios.request({
       method: "POST",
       url: "https://ocrapi.visive.ai",
@@ -87,8 +87,9 @@ async function savePdf(base64: string) {
     // console.log("-------------data", data);
 
     return parser.parse(data.data);
-  } catch (error) {
-    console.log("---------------catch error", error);
-  }
+  // } 
+  // catch (error) {
+  //   console.log("---------------catch error", error);
+  // }
 }
 export { create, filterAndPaginate, savePdf };
